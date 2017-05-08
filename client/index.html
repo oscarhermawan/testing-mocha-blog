@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- axios, vue, bootstrap, css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div id="app">
+
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+
+        <div class="col-md-10">
+
+          <div class="row">
+            <div class="col-md-4">
+              <ul>
+                <artikel v-for="list in lists_blog" :title="list.title">
+                </artikel>
+              </ul>
+            </div>
+            <div class="col-md-8">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-1">
+        </div>
+      </div>
+
+
+
+
+
+
+    </div>
+  </body>
+
+
+  <script>
+    Vue.component('artikel', {
+      props:['title'],
+      template:'<li>{{ title }}</li>'
+    })
+
+    Vue.component('student', {
+      props:['name'],
+      template:'<li>{{ name }}</li>'
+    })
+
+    var app = new Vue({
+      el:'#app',
+      data:{
+        lists_blog:[]
+      },
+      created:function(){
+        axios.get('http://localhost:3000/api/blog')
+        .then((blog)=>{
+          console.log(blog.data);
+          app.lists_blog = blog.data
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+      },
+      methods:{
+
+      }
+    })
+  </script>
+</html>
